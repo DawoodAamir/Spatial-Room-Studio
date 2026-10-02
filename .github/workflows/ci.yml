@@ -20,7 +20,11 @@ jobs:
           xcodebuild -project 'Spatial Room Studio.xcodeproj' -scheme 'Spatial Room Studio' -configuration Release -destination 'generic/platform=visionOS Simulator' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO build
           xcodebuild -project 'Spatial Room Studio.xcodeproj' -scheme 'Spatial Room Studio' -configuration Release -destination 'generic/platform=visionOS' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO build
       - name: Ensure visionOS runtime
-        run: xcodebuild -downloadPlatform visionOS -buildVersion 27.0 -architectureVariant arm64
+        run: |
+          xcrun simctl list runtimes --json > /tmp/runtimes.json
+          if ! python3 -c 'import json; r=json.load(open("/tmp/runtimes.json"))["runtimes"]; raise SystemExit(not any(x.get("isAvailable") and x.get("version", "").startswith("27.") and ("xrOS" in x["identifier"] or "visionOS" in x["identifier"]) for x in r))'; then
+            xcodebuild -downloadPlatform visionOS -buildVersion 27.0 -architectureVariant arm64
+          fi
       - name: Native workflow
         run: bash Scripts/test-ui.sh
       - name: Test evidence
