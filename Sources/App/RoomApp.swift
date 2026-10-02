@@ -309,6 +309,7 @@ struct RoomScene: View {
           model.draft.moved(id: id, x: item.x + Float(delta.x), z: item.z + Float(delta.z)))
       }
     )
+    .accessibilityIdentifier("roomScene")
     .accessibilityLabel(
       "Room furniture. Use the main window's position controls as an alternative to dragging.")
   }

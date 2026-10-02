@@ -15,6 +15,9 @@ for runtime, devices in state['devices'].items():
 raise SystemExit('Install the visionOS 27 simulator runtime in Xcode before running this workflow.')
 PY
 )}"
+xcrun simctl bootstatus "$simulator_id" -b
 result="build/Workflow-$(date +%s).xcresult"
 xcodebuild -project 'Spatial Room Studio.xcodeproj' -scheme 'Spatial Room Studio' -destination "platform=visionOS Simulator,id=$simulator_id" -derivedDataPath build/DerivedData test -collect-test-diagnostics never -resultBundlePath "$result"
 xcrun xcresulttool export attachments --path "$result" --output-path build/Screenshots
+
+xcrun simctl io "$simulator_id" screenshot build/Screenshots/Simulator.png
