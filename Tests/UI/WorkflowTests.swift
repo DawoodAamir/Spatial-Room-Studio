@@ -28,6 +28,7 @@ import XCTest
     XCTAssertTrue(app.buttons["Saved layouts · 1"].exists, app.debugDescription)
     app.buttons["View in 3D"].tap()
     XCTAssertTrue(
-      app.descendants(matching: .any)["roomScene"].waitForExistence(timeout: 15), app.debugDescription)
+      app.descendants(matching: .any)["roomScene"].waitForExistence(timeout: 15),
+      app.debugDescription)
   }
 }

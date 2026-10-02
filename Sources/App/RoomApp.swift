@@ -122,7 +122,8 @@ struct RoomWorkspace: View {
                   "\(model.participantCount) participants · Snapshots are shared only when you send them."
                 )
                 HStack {
-                  Button("Send current layout") { Task { await model.sendLayout() } }.disabled(model.sending)
+                  Button("Send current layout") { Task { await model.sendLayout() } }.disabled(
+                    model.sending)
                   Button("Leave review") { model.leaveReview() }
                 }
                 if let shared = model.shared {
@@ -309,7 +310,12 @@ struct RoomScene: View {
           model.draft.moved(id: id, x: item.x + Float(delta.x), z: item.z + Float(delta.z)))
       }
     )
-    .accessibilityIdentifier("roomScene")
+    .ornament(attachmentAnchor: .scene(.bottom)) {
+      if !fullScale {
+        Label("Tabletop room", systemImage: "cube")
+          .padding().glassBackgroundEffect().accessibilityIdentifier("roomScene")
+      }
+    }
     .accessibilityLabel(
       "Room furniture. Use the main window's position controls as an alternative to dragging.")
   }
