@@ -2,6 +2,14 @@
 
 A native visionOS workspace for arranging original furniture, comparing room layouts, and reviewing a selected layout over SharePlay.
 
+## Preview
+
+Native visionOS 27 simulator captures: saved-layout comparison and the original tabletop furniture volume.
+
+![Layout comparison](Docs/Workspace.png)
+
+![Tabletop room](Docs/Volume.png)
+
 ## Try it
 
 Open **Spatial Room Studio.xcodeproj** with Xcode 27. Run on the visionOS 27 simulator, or select your own development team to run on Apple Vision Pro. The bundle identifier is `com.dd.spatialroomstudio`; no signing team is embedded.
