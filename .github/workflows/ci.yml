@@ -34,5 +34,6 @@ jobs:
           name: native-workflow
           path: |
             build/Screenshots
+            build/Attachments
             build/*.xcresult
           if-no-files-found: ignore

@@ -17,10 +17,12 @@ import XCTest
     app.buttons["Compare"].tap()
     XCTAssertTrue(app.buttons["End comparison"].waitForExistence(timeout: 10), app.debugDescription)
     for _ in 0..<4 { app.scrollViews.firstMatch.swipeDown() }
-    let screenshot = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    let screenshot = XCTAttachment(screenshot: app.screenshot())
     screenshot.name = "Room layout comparison"
     screenshot.lifetime = .keepAlways
     add(screenshot)
+    print("SCENE_CAPTURE: Workspace")
+    Thread.sleep(forTimeInterval: 10)
     app.terminate()
     app.launch()
     XCTAssertTrue(
@@ -30,9 +32,11 @@ import XCTest
     XCTAssertTrue(
       app.descendants(matching: .any)["roomScene"].waitForExistence(timeout: 15),
       app.debugDescription)
-    let volume = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+    let volume = XCTAttachment(screenshot: app.screenshot())
     volume.name = "Tabletop room"
     volume.lifetime = .keepAlways
     add(volume)
+    print("SCENE_CAPTURE: Volume")
+    Thread.sleep(forTimeInterval: 10)
   }
 }
