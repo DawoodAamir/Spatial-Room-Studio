@@ -30,7 +30,7 @@ def capture_scenes():
         if name not in {"Workspace", "Volume"} or name in captured:
             continue
         try:
-            subprocess.run(["xcrun", "simctl", "io", simulator, "screenshot", str(output / (name + ".png"))], check=True)
+            subprocess.run(["xcrun", "simctl", "io", simulator, "screenshot", str(output / (name + ".png"))], check=True, timeout=150)
             response = folder / "scene-response.tmp"
             response.write_text(name)
             response.replace(folder / "scene-response.txt")

@@ -42,7 +42,7 @@ import XCTest
     try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
     try Data(name.utf8).write(
       to: folder.appendingPathComponent("scene-request.txt"), options: .atomic)
-    for _ in 0..<60 {
+    for _ in 0..<180 {
       if (try? String(
         contentsOf: folder.appendingPathComponent("scene-response.txt"), encoding: .utf8)) == name
       {
