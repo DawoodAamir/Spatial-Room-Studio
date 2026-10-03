@@ -20,4 +20,7 @@ result="build/Workflow-$(date +%s).xcresult"
 xcodebuild -project 'Spatial Room Studio.xcodeproj' -scheme 'Spatial Room Studio' -destination "platform=visionOS Simulator,id=$simulator_id" -derivedDataPath build/DerivedData test -collect-test-diagnostics never -resultBundlePath "$result"
 xcrun xcresulttool export attachments --path "$result" --output-path build/Screenshots
 
+# XCTest closes the app at teardown; relaunch before capturing the simulator scene.
+SIMCTL_CHILD_ROOM_TEST_STORE="$(uuidgen)" xcrun simctl launch "$simulator_id" com.dd.spatialroomstudio
+sleep 5
 xcrun simctl io "$simulator_id" screenshot build/Screenshots/Simulator.png
