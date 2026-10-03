@@ -21,8 +21,7 @@ import XCTest
     screenshot.name = "Room layout comparison"
     screenshot.lifetime = .keepAlways
     add(screenshot)
-    print("SCENE_CAPTURE: Workspace")
-    Thread.sleep(forTimeInterval: 10)
+    try captureScene("Workspace")
     app.terminate()
     app.launch()
     XCTAssertTrue(
@@ -36,7 +35,21 @@ import XCTest
     volume.name = "Tabletop room"
     volume.lifetime = .keepAlways
     add(volume)
-    print("SCENE_CAPTURE: Volume")
-    Thread.sleep(forTimeInterval: 10)
+    try captureScene("Volume")
+  }
+  private func captureScene(_ name: String) throws {
+    let folder = URL.documentsDirectory
+    try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+    try Data(name.utf8).write(
+      to: folder.appendingPathComponent("scene-request.txt"), options: .atomic)
+    for _ in 0..<60 {
+      if (try? String(
+        contentsOf: folder.appendingPathComponent("scene-response.txt"), encoding: .utf8)) == name
+      {
+        return
+      }
+      Thread.sleep(forTimeInterval: 1)
+    }
+    XCTFail("Simulator did not acknowledge scene capture: " + name)
   }
 }

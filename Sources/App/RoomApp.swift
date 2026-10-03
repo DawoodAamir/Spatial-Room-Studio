@@ -4,11 +4,17 @@ import SwiftUI
 @main struct SpatialRoomStudioApp: App {
   @State private var model = RoomModel()
   var body: some SwiftUI.Scene {
-    WindowGroup {
+    WindowGroup(id: "workspace") {
       RoomWorkspace(model: model).frame(minWidth: 900, minHeight: 640)
     }.defaultSize(width: 1100, height: 740)
     WindowGroup(id: "room-model") { RoomScene(model: model, fullScale: false) }
       .windowStyle(.volumetric).defaultSize(width: 1.1, height: 0.8, depth: 1.1, in: .meters)
+      .defaultWindowPlacement { _, context in
+        if let workspace = context.windows.first(where: { $0.id == "workspace" }) {
+          return WindowPlacement(.trailing(workspace))
+        }
+        return WindowPlacement(.utilityPanel)
+      }
     ImmersiveSpace(id: "room-space") {
       RoomScene(model: model, fullScale: true).onDisappear { model.immersive = false }
     }.immersionStyle(selection: .constant(.mixed), in: .mixed)

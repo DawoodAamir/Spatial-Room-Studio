@@ -17,6 +17,6 @@ PY
 )}"
 xcrun simctl bootstatus "$simulator_id" -b
 result="build/Workflow-$(date +%s).xcresult"
-python3 Scripts/capture-workflow.py "$simulator_id" xcodebuild -project 'Spatial Room Studio.xcodeproj' -scheme 'Spatial Room Studio' -destination "platform=visionOS Simulator,id=$simulator_id" -derivedDataPath build/DerivedData test -maximum-concurrent-test-simulator-destinations 1 -parallel-testing-enabled NO -collect-test-diagnostics never -resultBundlePath "$result"
+python3 Scripts/capture-workflow.py "$simulator_id" com.dd.spatialroomstudio.uitests.xctrunner xcodebuild -project 'Spatial Room Studio.xcodeproj' -scheme 'Spatial Room Studio' -destination "platform=visionOS Simulator,id=$simulator_id" -derivedDataPath build/DerivedData test -maximum-concurrent-test-simulator-destinations 1 -parallel-testing-enabled NO -collect-test-diagnostics never -resultBundlePath "$result"
 xcrun xcresulttool export attachments --path "$result" --output-path build/Attachments
 
